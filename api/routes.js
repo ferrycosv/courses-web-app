@@ -9,5 +9,6 @@ router.get("/", controllers.hello);
 router.get("/courses", controllers.get_courses);
 router.get("/courses/:id", controllers.get_course_by_id);
 router.post("/courses", controllers.post_course);
+router.put("/courses/:id", controllers.put_course);
 
 module.exports = router;
