@@ -109,6 +109,33 @@ const controllers = {
       return next(err);
     }
   },
+  delete_course: async (req, res, next) => {
+    let course = {};
+    let courses = [];
+    try {
+      const text = await readFile(DATA_DIR, "utf-8");
+      if (text) {
+        courses = JSON.parse(text);
+        course = courses.find((x) => x.id === parseInt(req.params.id));
+        if (!course)
+          return res
+            .status(404)
+            .send(`The course with id:${req.params.id} was not found!`);
+      } else {
+        return res.status(404).send("The courses.json file is empty!");
+      }
+    } catch (err) {
+      return next(err);
+    }
+    const index = courses.indexOf(course);
+    courses.splice(index, 1);
+    try {
+      await writeFile(DATA_DIR, JSON.stringify(courses), "utf-8");
+      return res.send(course);
+    } catch (err) {
+      return next(err);
+    }
+  },
 };
 
 module.exports = controllers;
