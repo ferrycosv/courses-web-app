@@ -77,8 +77,36 @@ const controllers = {
       await writeFile(DATA_DIR, JSON.stringify(courses), "utf-8");
       return res.send(course);
     } catch (err) {
-      next(err);
+      return next(err);
       //return res.status(500).send("Server error writing courses.json file!");
+    }
+  },
+  put_course: async (req, res, next) => {
+    let course = {};
+    let courses = [];
+    try {
+      const text = await readFile(DATA_DIR, "utf-8");
+      if (text) {
+        courses = JSON.parse(text);
+        course = courses.find((x) => x.id === parseInt(req.params.id));
+        if (!course)
+          return res
+            .status(404)
+            .send(`The course with id:${req.params.id} was not found!`);
+      } else {
+        return res.status(404).send("The courses.json file is empty!");
+      }
+    } catch (err) {
+      return next(err);
+    }
+    const { error } = validateCourse(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+    course.name = req.body.name;
+    try {
+      await writeFile(DATA_DIR, JSON.stringify(courses), "utf-8");
+      return res.send(course);
+    } catch (err) {
+      return next(err);
     }
   },
 };
