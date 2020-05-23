@@ -65,15 +65,15 @@ const controllers = {
       } else {
         return res.status(404).send("The courses.json file is empty!");
       }
-    } catch (err) {
+      /*} catch (err) {
       return next(err);
-    }
-    const course = {
-      id: courses.length + 1,
-      name: req.body.name,
-    };
-    courses.push(course);
-    try {
+    }*/
+      const course = {
+        id: courses.length + 1,
+        name: req.body.name,
+      };
+      courses.push(course);
+      //try {
       await writeFile(DATA_DIR, JSON.stringify(courses), "utf-8");
       return res.send(course);
     } catch (err) {
@@ -96,13 +96,13 @@ const controllers = {
       } else {
         return res.status(404).send("The courses.json file is empty!");
       }
-    } catch (err) {
+      /*} catch (err) {
       return next(err);
-    }
-    const { error } = validateCourse(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    course.name = req.body.name;
-    try {
+    }*/
+      const { error } = validateCourse(req.body);
+      if (error) return res.status(400).send(error.details[0].message);
+      course.name = req.body.name;
+      //try {
       await writeFile(DATA_DIR, JSON.stringify(courses), "utf-8");
       return res.send(course);
     } catch (err) {
@@ -124,12 +124,12 @@ const controllers = {
       } else {
         return res.status(404).send("The courses.json file is empty!");
       }
-    } catch (err) {
+      /*} catch (err) {
       return next(err);
-    }
-    const index = courses.indexOf(course);
-    courses.splice(index, 1);
-    try {
+    }*/
+      const index = courses.indexOf(course);
+      courses.splice(index, 1);
+      //try {
       await writeFile(DATA_DIR, JSON.stringify(courses), "utf-8");
       return res.send(course);
     } catch (err) {
