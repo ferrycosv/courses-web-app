@@ -25,11 +25,11 @@ export const init = async () => {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
-      if (res.status === 404) throw err;
+      if (res.status !== 200) throw new Error(await res.text());
       alert("Course saved successfully!");
       location.reload();
     } catch (err) {
-      console.error(err);
+      console.log(err);
       alert("There's an error check log for details...");
     }
   });
@@ -45,11 +45,11 @@ export const init = async () => {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
-      if (res.status === 404) throw err;
+      if (res.status!== 200) throw new Error(await res.text());
       alert("Course updated successfully!");
       location.reload();
     } catch (err) {
-      console.error(err);
+      console.log(err);
       alert("There's an error check log for details...");
     }
   });
@@ -60,11 +60,11 @@ export const init = async () => {
       const res = await fetch(`/api/courses/${course_id}`, {
         method: "DELETE",
       });
-      if (res.status === 404) throw err;
+      if (res.status !== 200) throw new Error(await res.text());
       alert("Course deleted successfully!");
       location.reload();
     } catch (err) {
-      console.error(err);
+      console.log(err);
       alert("There's an error check log for details...");
     }
   });
